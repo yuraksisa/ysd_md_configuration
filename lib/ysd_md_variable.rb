@@ -12,5 +12,5 @@ module SystemConfiguration
     property :module, String, :field => 'module', :length => 64 # Which defines the variable
     property :description, String, :field => 'description', :length => 256 # The variable description
     
-  end #Account
-end #Integration
+  end #Variable
+end #SystemConfiguration

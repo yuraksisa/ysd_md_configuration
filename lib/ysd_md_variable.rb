@@ -1,3 +1,5 @@
+require 'data_mapper' unless defined?DataMapper
+
 module SystemConfiguration
   #
   # It represents a system variable which is used to configure applications, blocks, ...

@@ -1,19 +1,24 @@
 require 'data_mapper' unless defined?DataMapper
+require 'dm-encrypted' unless defined?DataMapper::Property::Encrypted
 
 module SystemConfiguration
   #
-  # It represents a system variable which is used to configure applications, blocks, ...
+  # A variable which value is stored encrypted on the database
   #
-  class Variable
+  # It uses RSA to crypt the variable
+  #
+  # http://stuff-things.net/2007/06/11/encrypting-sensitive-data-with-ruby-on-rails/
+  #
+  class SecureVariable
     include DataMapper::Resource
-    
-    storage_names[:default] = "conf_variable"
-    
-    property :name, String, :field => 'name', :length => 128, :key => true # The variable name
-    property :value, String, :field => 'value', :length => 256 # The variable value
-    property :module, String, :field => 'module', :length => 64 # Which defines the variable
-    property :description, String, :field => 'description', :length => 256 # The variable description
-    
+
+    storage_names[:default] = 'conf_secure_variables'
+
+    property :name, String, :field => 'name', :length => 128, :key => true
+    property :value, Encrypted, :field => 'value', :length => 1024
+    property :module, String, :field => 'module', :length => 64
+    property :description, String, :field => 'description', :length => 256
+
     #
     # Gets the value of the variable
     #
@@ -27,7 +32,7 @@ module SystemConfiguration
     #
     def self.get_value(name, default_value=nil)
     
-      sysvar = Variable.get(name)
+      sysvar = SecureVariable.get(name)
     
       return_value = if sysvar
                        sysvar.value
@@ -51,19 +56,20 @@ module SystemConfiguration
       variable_module = opts[:module]
       variable_description = opts[:description]
 
-      if variable = Variable.get(name)
+      if variable = SecureVariable.get(name)
         variable.value = value.to_s
         variable.module = variable_module if variable_module
         variable.description = variable_description if variable_description
         variable.save
       else
-        variable = Variable.create(name, {:value => value.to, 
-          :module => variable_module, :description => variable_description})
+        variable = SecureVariable.create(:name => name, :value => value.to_s, 
+          :module => variable_module, :description => variable_description)
       end
 
       return variable
 
     end
 
-  end #Variable
-end #SystemConfiguration
+
+  end
+end

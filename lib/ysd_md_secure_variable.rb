@@ -1,16 +1,41 @@
 require 'data_mapper' unless defined?DataMapper
-require 'dm-encrypted' unless defined?DataMapper::Property::Encrypted
+require 'dm-ysd-encrypted' unless defined?DataMapper::Property::Encrypted
+require 'ysd_md_yito' unless defined?Yito::Model::Finder
 
 module SystemConfiguration
   #
   # A variable which value is stored encrypted on the database
   #
-  # It uses RSA to crypt the variable
+  # It uses RSA to crypt the variable through dm-ysd-encrypted
+  #
+  # In order to work you need to configure Crypto. 
+  #
+  # Example 1: Creating the key programatically - FOR TESTING -
+  #
+  #  require 'openssl'
+  #  require 'digest/sha2'
+  #
+  #  rsa_key = OpenSSL::PKey::RSA.generate(2048)
+  #
+  #  Crypto.configure({:rsa_key => rsa_key,
+  #    :aes_key => rsa_key.public_encrypt(Digest::SHA2.new(256).digest('my_password')),
+  #    :aes_iv => rand.to_s})
+  #
+  # Example 2: Using environment variables - IN PRODUCTION -
+  # https://devcenter.heroku.com/articles/config-vars
+  #
+  #  You can define three environment variables, CRYPT_RSA_KEY, CRYPT_AES_KEY and
+  #  CRYPT_AES_IV
+  #
+  #  Crypto.configure({:rsa_key => ENV['CRYPT_RSA_KEY'], 
+  #   :aes_key => ENV['CRYPT_AES_KEY'], 
+  #   :aes_iv => ENV['CRYPT_AES_IV']})
   #
   # http://stuff-things.net/2007/06/11/encrypting-sensitive-data-with-ruby-on-rails/
   #
   class SecureVariable
     include DataMapper::Resource
+    extend Yito::Model::Finder
 
     storage_names[:default] = 'conf_secure_variables'
 

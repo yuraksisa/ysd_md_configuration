@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.authors = ["Yurak Sisa Dream"]
   s.date    = "2012-05-09"
   s.email   = ["yurak.sisa.dream@gmail.com"]
-  s.files   = Dir['lib/**/*.rb']
+  s.files   = Dir['lib/**/*.rb','spec/**/*.rb']
   s.summary = "A DattaMapper-based model for configuration"
   s.homepage = "http://github.com/yuraksisa/ysd_md_configuration"
     

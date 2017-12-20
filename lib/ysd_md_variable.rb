@@ -57,7 +57,7 @@ module SystemConfiguration
         variable.description = variable_description if variable_description
         variable.save
       else
-        variable = Variable.create(name, {:value => value.to, 
+        variable = Variable.create({:name => name, :value => value.to_s,
           :module => variable_module, :description => variable_description})
       end
 

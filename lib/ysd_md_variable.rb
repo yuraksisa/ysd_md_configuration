@@ -6,7 +6,8 @@ module SystemConfiguration
   #
   class Variable
     include DataMapper::Resource
-    
+    extend Yito::Model::Finder
+
     storage_names[:default] = "conf_variable"
     
     property :name, String, :field => 'name', :length => 128, :key => true # The variable name

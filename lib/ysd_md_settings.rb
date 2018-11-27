@@ -8,6 +8,30 @@ module SystemConfiguration
   class Settings
     include Singleton
 
+    CURRENCY_FORMATS = ['000.000.000,00',
+                        '000,000,000.00']
+    SHORT_DATES_FORMATS = ['%d/%m/%y',
+                           '%m/%d/%y',
+                           '%y/%m/%d',
+                           '%d-%m-%y',
+                           '%m-%d-%y',
+                           '%y-%m-%d',
+                           '%d.%m.%y',
+                           '%m.%d.%y',
+                           '%y.%m.%d']
+    DEFAULT_DATES_FORMATS = ['%d/%m/%Y',
+                             '%m/%d/%Y',
+                             '%Y/%m/%d',
+                             '%d-%m-%Y',
+                             '%m-%d-%Y',
+                             '%Y-%m-%d',
+                             '%d.%m.%Y',
+                             '%m.%d.%Y',
+                             '%Y.%m.%d']
+    EXTENDED_DATES_FORMATS = ['%d %B %Y']
+    EXTENDED_DATES_ORDINALIZE_DATE_FORMATS = ['%d %B %Y']
+    FULL_DATES_FORMATS = ['%A, %d %B %Y']
+
     #
     # Get the default currency (ISO 4217)
     #

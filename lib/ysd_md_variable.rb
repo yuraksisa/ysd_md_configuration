@@ -1,4 +1,5 @@
 require 'data_mapper' unless defined?DataMapper
+require 'ysd_md_yito' unless defined?Yito::Model::Finder
 
 module SystemConfiguration
   #

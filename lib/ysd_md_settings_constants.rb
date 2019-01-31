@@ -358,7 +358,6 @@ module SystemConfiguration
         'Asia/Ulaanbaatar' => '(GMT+08:00) Ulaanbaatar',
         'Asia/Tokyo' => '(GMT+09:00) Tokyo',
         'Asia/Seoul' => '(GMT+09:00) Seoul',
-        'Asia/Tokyo' => '(GMT+09:00) Tokyo',
         'Asia/Yakutsk' => '(GMT+09:00) Yakutsk',
         'Australia/Adelaide' => '(GMT+09:30) Adelaide',
         'Australia/Darwin' => '(GMT+09:30) Darwin',
